@@ -18,3 +18,5 @@ function fetchData() {
             }
         })
 }
+
+fetchData()

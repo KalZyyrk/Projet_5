@@ -10,7 +10,6 @@ function fetchInfo() {
                 if (product._id == productId) {
                     var img = document.createElement('img')
                     img.setAttribute('src', product.imageUrl)
-                    console.log(img)
                     document.getElementsByClassName('item__img')[0].appendChild(img)
                     var title = document.createTextNode(product.name)
                     document.getElementById('title').appendChild(title)
