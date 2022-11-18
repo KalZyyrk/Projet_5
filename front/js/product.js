@@ -17,6 +17,13 @@ function fetchInfo() {
                     document.getElementById('price').appendChild(id)
                     var desc = document.createTextNode(product.description)
                     document.getElementById('description').appendChild(desc)
+                    for (color of product.colors) {
+                        console.log(color)
+                        var option = document.createElement('option')
+                        var colors = document.createTextNode(color)
+                        option.appendChild(colors)
+                        document.getElementById('colors').appendChild(option)
+                    }
                 }
             }
         })
