@@ -18,7 +18,6 @@ function fetchInfo() {
                     var desc = document.createTextNode(product.description)
                     document.getElementById('description').appendChild(desc)
                     for (color of product.colors) {
-                        console.log(color)
                         var option = document.createElement('option')
                         var colors = document.createTextNode(color)
                         option.appendChild(colors)
@@ -29,4 +28,42 @@ function fetchInfo() {
         })
 }
 
+function addProduct() {
+    var title = document.getElementById('title').innerText;
+    var choice = document.getElementById('colors');
+    var image = document.getElementsByClassName('item__img')[0].innerText
+    var colors = choice.options[choice.selectedIndex].innerText;
+    var quantity = document.getElementById('quantity').value;
+    console.log(quantity)
+    if (quantity == 0) {
+        return window.alert("Veuillez selectioner une quantitée");
+    } else if (colors == '--SVP, choisissez une couleur --') {
+        return window.alert("Veuillez choisir une couleur")
+    } else {
+        for (let i = 0; i < localStorage.length; i++) {
+            let index = localStorage.key(i);
+            let infoJSON = localStorage.getItem(index);
+            let info = JSON.parse(infoJSON);
+            if (info.id == productId && info.color == colors) {
+                console.log(typeof info.quantity)
+                quantity = parseInt(info.quantity) + parseInt(quantity)
+            }
+        }
+        product = {
+            name: title,
+            id: productId,
+            color: colors,
+            image: image,
+            quantity: quantity
+        }
+        let productJson = JSON.stringify(product);
+        localStorage.setItem((product.name + product.color), productJson)
+    }
+}
+
+
 fetchInfo()
+document.getElementById('addToCart').addEventListener('click', addProduct)
+// localStorage.clear()
+console.log(localStorage)
+
