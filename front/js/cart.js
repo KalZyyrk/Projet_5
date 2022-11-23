@@ -1,9 +1,7 @@
 
 function addCart() {
     let index = localStorage.getItem('products');
-    console.log(index)
     let articles = JSON.parse(index);
-    console.log(articles);
     fetch('http://localhost:3000/api/products')
         .then((res) => res.json())
         .then((products) => {
@@ -40,9 +38,11 @@ function addCart() {
         })
 }
 
-let del = document.getElementsByClassName("deleteItems");
-console.log(del.length);
+
 addCart();
+let del = document.getElementsByClassName("deleteItems");
+console.log(del);
+console.log(del.length);
 
 
 
