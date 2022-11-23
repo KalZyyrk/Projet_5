@@ -1,7 +1,6 @@
 var str = window.location.href
 var url = new URL(str)
 var productId = url.searchParams.get("id")
-
 function fetchInfo() {
     fetch('http://localhost:3000/api/products')
         .then((res) => res.json())
@@ -28,42 +27,43 @@ function fetchInfo() {
         })
 }
 
+function getProductFromLocalStorage() {
+    let truc = localStorage.getItem('products')
+    return JSON.parse(truc)
+}
+
 function addProduct() {
+    const storage = getProductFromLocalStorage() || [];
     var title = document.getElementById('title').innerText;
     var choice = document.getElementById('colors');
-    var image = document.getElementsByClassName('item__img')[0].innerText
     var colors = choice.options[choice.selectedIndex].innerText;
     var quantity = document.getElementById('quantity').value;
-    console.log(quantity)
+    console.log(storage)
     if (quantity == 0) {
         return window.alert("Veuillez selectioner une quantitée");
     } else if (colors == '--SVP, choisissez une couleur --') {
         return window.alert("Veuillez choisir une couleur")
     } else {
-        for (let i = 0; i < localStorage.length; i++) {
-            let index = localStorage.key(i);
-            let infoJSON = localStorage.getItem(index);
-            let info = JSON.parse(infoJSON);
-            if (info.id == productId && info.color == colors) {
-                console.log(typeof info.quantity)
-                quantity = parseInt(info.quantity) + parseInt(quantity)
+        for (let i = 0; i < storage.length; i++) {
+            if (storage[i].id == productId && storage[i].color == colors) {
+                quantity = parseInt(storage[i].quantity) + parseInt(quantity)
+                storage.splice(i, 1)
             }
-        }
+        };
         product = {
             name: title,
             id: productId,
             color: colors,
-            image: image,
             quantity: quantity
         }
-        let productJson = JSON.stringify(product);
-        localStorage.setItem((product.name + product.color), productJson)
+        storage.push(product)
+        let productJson = JSON.stringify(storage);
+        localStorage.setItem('products', productJson)
     }
 }
 
 
 fetchInfo()
 document.getElementById('addToCart').addEventListener('click', addProduct)
-// localStorage.clear()
-console.log(localStorage)
+
 

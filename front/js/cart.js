@@ -1,13 +1,14 @@
 
 function addCart() {
-    for (let i = 0; i < localStorage.length; i++) {
-        let index = localStorage.key(i);
-        let articleJSON = localStorage.getItem(index);
-        let article = JSON.parse(articleJSON);
-        fetch('http://localhost:3000/api/products')
-            .then((res) => res.json())
-            .then((products) => {
-                for (product of products) {
+    let index = localStorage.getItem('products');
+    console.log(index)
+    let articles = JSON.parse(index);
+    console.log(articles);
+    fetch('http://localhost:3000/api/products')
+        .then((res) => res.json())
+        .then((products) => {
+            for (product of products) {
+                for (article of articles)
                     if (product._id == article.id) {
                         let display = '';
                         display +=
@@ -19,7 +20,7 @@ function addCart() {
                                 <div class="cart__item__content__description">
                                      <h2>${product.name}</h2>
                                     <p>${article.color}</p>
-                                    <p>${product.price}</p>
+                                    <p>${product.price} €</p>
                                  </div>
                                 <div class="cart__item__content__settings">
                                 <div class="cart__item__content__settings__quantity">
@@ -28,24 +29,23 @@ function addCart() {
                                 </div>
                                 <div class="cart__item__content__settings__delete">
                                     <p class="deleteItems">Supprimer</p>
+                                    <p id="length"><p>
                                 </div>
                                 </div>
                                 </div>
                             </article>`;
                         document.getElementById('cart__items').insertAdjacentHTML('afterbegin', display)
                     }
-                }
-            })
-    }
+            }
+        })
 }
 
-// function deleteCart() {
-//     console.log('on est la')
-// }
+let del = document.getElementsByClassName("deleteItems");
+console.log(del.length);
+addCart();
 
-addCart()
-let selected = document.querySelector(`[data-id="`)
-console.log(quantity)
+
+
 // var deleteItem = document.getElementsByClassName('deleteItems');
 // Array.from(deleteItem).forEach(function (deleteItem) {
 //     deleteItem.addEventListener('click', deleteCart)
