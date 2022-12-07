@@ -40,13 +40,17 @@ function addProduct() {
     var quantity = document.getElementById('quantity').value;
     console.log(storage)
     if (quantity == 0) {
-        return window.alert("Veuillez selectioner une quantitée");
+        return window.alert("Veuillez selectioner une quantitée valide");
     } else if (colors == '--SVP, choisissez une couleur --') {
         return window.alert("Veuillez choisir une couleur")
     } else {
         for (let i = 0; i < storage.length; i++) {
             if (storage[i].id == productId && storage[i].color == colors) {
                 quantity = parseInt(storage[i].quantity) + parseInt(quantity)
+                if (quantity > 100) {
+                    quantity = 100;
+                    window.alert('100 unités max')
+                }
                 storage.splice(i, 1)
             }
         };

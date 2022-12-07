@@ -4,8 +4,8 @@ function fetchData() {
     fetch(url)
         .then((res) => res.json())
         .then((products) => {
+            console.log(products);
             for (product of products) {
-                console.log(product)
                 let display = ''
                 display += `<a href="./product.html?id=${product._id}">
                             <article>
@@ -14,7 +14,7 @@ function fetchData() {
                                 <p class="productDescription">${product.description}</p>
                             </article>
                             </a>`
-                document.getElementById("items").insertAdjacentHTML('afterbegin', display)
+                document.getElementById("items").insertAdjacentHTML('beforeend', display)
             }
         })
 }
