@@ -39,6 +39,7 @@ function addProduct() {
     var colors = choice.options[choice.selectedIndex].innerText;
     var quantity = document.getElementById('quantity').value;
     console.log(storage)
+    //verifier que c'est un entier 
     if (quantity == 0) {
         return window.alert("Veuillez selectioner une quantitée valide");
     } else if (colors == '--SVP, choisissez une couleur --') {
